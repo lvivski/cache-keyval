@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "nodenext",
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "esnext",
+      "dom",
+    ],
+    "rootDir": "./src",
+    "outDir": "lib",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "strict": true,
+  },
+  "include": [
+    "src",
+  ],
+  "exclude": [
+    "node_modules",
+  ]
+}
