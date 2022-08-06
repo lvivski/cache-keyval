@@ -1,13 +1,14 @@
 {
   "name": "cache-kv",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
-  "main": "./lib/index.js",
+  "browser": "./lib/index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "prepare": "npm run build"
   },
   "author": "Yehor Lvivski <yehor@lvivski.com>",
+  "repository": "github:lvivski/cache-kv",
   "license": "MIT"
 }

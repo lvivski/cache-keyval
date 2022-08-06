@@ -1,7 +1,7 @@
 const defaultCacheName = 'cache-kv'
 const cacheMap = new WeakMap<Cache, string>();
 
-export async function openStore(
+export async function openCache(
 	name: string,
 ): Promise<Cache> {
 	const cache = await caches.open(name)
@@ -9,17 +9,17 @@ export async function openStore(
 	return cache
 }
 
-let defaultStore: Cache | undefined
-async function getDefaultStore(): Promise<Cache> {
-	if (!defaultStore) {
-		defaultStore = await openStore(defaultCacheName)
+let defaultCache: Cache | undefined
+async function getDefaultCache(): Promise<Cache> {
+	if (!defaultCache) {
+		defaultCache = await openCache(defaultCacheName)
 	}
-	return defaultStore
+	return defaultCache
 }
 
 export async function get<T = any>(
 	key: string,
-	cachePromise = getDefaultStore(),
+	cachePromise = getDefaultCache(),
 ): Promise<T | undefined> {
 	const cache = await cachePromise
 	const response = await cache.match(encodeURI(cacheMap.get(cache) + key))
@@ -29,7 +29,7 @@ export async function get<T = any>(
 export async function set(
 	key: string,
 	value: any,
-	cachePromise = getDefaultStore(),
+	cachePromise = getDefaultCache(),
 ): Promise<void> {
 	const cache = await cachePromise
 	return cache.put(
@@ -41,7 +41,7 @@ export async function set(
 export async function update<T = any>(
 	key: string,
 	updater: (currentValue: T | undefined) => T,
-	cachePromise = getDefaultStore(),
+	cachePromise = getDefaultCache(),
 ): Promise<void> {
 	const currentValue = await get<T>(key, cachePromise)
 	return set(key, updater(currentValue), cachePromise)
@@ -49,14 +49,14 @@ export async function update<T = any>(
 
 export async function del(
 	key: string,
-	cachePromise = getDefaultStore(),
+	cachePromise = getDefaultCache(),
 ): Promise<boolean> {
 	const cache = await cachePromise
 	return cache.delete(encodeURI(cacheMap.get(cache) + key))
 }
 
 export async function keys(
-	cachePromise = getDefaultStore(),
+	cachePromise = getDefaultCache(),
 ): Promise<string[] | undefined> {
 	const cache = await cachePromise
 	const keys = await cache.keys()
@@ -65,7 +65,7 @@ export async function keys(
 }
 
 export async function values<T = any>(
-	cachePromise = getDefaultStore(),
+	cachePromise = getDefaultCache(),
 ): Promise<T[] | undefined> {
 	const cache = await cachePromise
 	const responses = await cache.matchAll()
@@ -74,11 +74,27 @@ export async function values<T = any>(
 	)
 }
 
+export async function entries<T = any>(
+	cachePromise = getDefaultCache(),
+): Promise<[string, T][] | undefined> {
+	const cache = await cachePromise
+	const responses = await cache.matchAll()
+	const values = await Promise.all(
+		responses.map(response => response?.json())
+	)
+
+	return values.map((value, index) => [
+		decodeURI(responses[index].url)
+			.replace(cacheMap.get(cache) ?? '', ''),
+		value
+	])
+}
+
 export function clear(
 	name: string = defaultCacheName,
 ): Promise<boolean> {
 	if (name === defaultCacheName) {
-		defaultStore = undefined
+		defaultCache = undefined
 	}
 	return caches.delete(name)
 }
