@@ -4,10 +4,7 @@
     "module": "esnext",
     "moduleResolution": "nodenext",
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "esnext",
-      "dom",
-    ],
+    "lib": ["esnext", "dom"],
     "rootDir": "./src",
     "outDir": "lib",
     "declaration": true,
@@ -15,10 +12,6 @@
     "sourceMap": true,
     "strict": true,
   },
-  "include": [
-    "src",
-  ],
-  "exclude": [
-    "node_modules",
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }
