@@ -9,10 +9,10 @@ export async function openCache(
 	return cache
 }
 
-let defaultCache: Cache | undefined
+let defaultCache: Promise<Cache> | undefined
 async function getDefaultCache(): Promise<Cache> {
 	if (!defaultCache) {
-		defaultCache = await openCache(defaultCacheName)
+		defaultCache = openCache(defaultCacheName)
 	}
 	return defaultCache
 }
