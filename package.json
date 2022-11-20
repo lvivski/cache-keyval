@@ -1,8 +1,8 @@
 {
-  "name": "cache-kv",
-  "version": "1.0.2",
+  "name": "cache-keyval",
+  "version": "1.0.0",
   "license": "MIT",
-  "repository": "lvivski/cache-kv",
+  "repository": "lvivski/cache-keyval",
   "author": "Yehor Lvivski <yehor@lvivski.com>",
   "type": "module",
   "exports": "./index.js",
