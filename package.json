@@ -1,15 +1,7 @@
 {
   "name": "cache-keyval",
-  "description": "Key-Value storage base on Cache API",
-  "keywords": [
-    "cache",
-    "keyval",
-    "storage",
-    "serviceworker",
-    "webworker",
-    "kv"
-  ],
   "version": "1.0.0",
+  "description": "Key-Value storage base on Cache API",
   "license": "MIT",
   "repository": "lvivski/cache-keyval",
   "author": "Yehor Lvivski <yehor@lvivski.com>",
@@ -24,6 +16,14 @@
   "files": [
     "index.js*",
     "index.d.ts*"
+  ],
+  "keywords": [
+    "cache",
+    "keyval",
+    "storage",
+    "serviceworker",
+    "webworker",
+    "kv"
   ],
   "devDependencies": {
     "typescript": "^4.8.4"
